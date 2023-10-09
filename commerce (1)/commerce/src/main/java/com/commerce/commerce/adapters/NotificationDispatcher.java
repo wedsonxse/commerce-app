@@ -1,5 +1,6 @@
 package com.commerce.commerce.adapters;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.stereotype.Service;
 
 import javax.mail.Authenticator;
@@ -14,8 +15,9 @@ import java.util.Properties;
 public class NotificationDispatcher implements  Dispatcher{
     public void sendNotification(String destinationEmail, String destinationName, Double transferedTotal) throws Exception {
         try {
-        final String username = "< your fromEmail here >";
-        final String password = "< your application key here >";
+        Dotenv env = Dotenv.load();
+        final String username = env.get("FROM_EMAIL");
+        final String password = env.get("APP_KEY");
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com");
         props.put("mail.smtp.port", "587");
@@ -32,7 +34,7 @@ public class NotificationDispatcher implements  Dispatcher{
         javax.mail.Session session = javax.mail.Session.getDefaultInstance(props, auth);
 
             Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress("< from email here>", "Adminstração do W-commerce"));
+            msg.setFrom(new InternetAddress(env.get("FROM_EMAIL"), "Adminstração do W-commerce"));
             msg.addRecipient(Message.RecipientType.TO, new InternetAddress(destinationEmail, destinationName));
             msg.setSubject("Transferência de créditos.");
             msg.setText("Você recebeu uma transferencia no valor de: " + transferedTotal);
