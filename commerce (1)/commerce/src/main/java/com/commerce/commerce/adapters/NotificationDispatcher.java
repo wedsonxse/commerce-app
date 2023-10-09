@@ -32,7 +32,7 @@ public class NotificationDispatcher implements  Dispatcher{
         javax.mail.Session session = javax.mail.Session.getDefaultInstance(props, auth);
 
             Message msg = new MimeMessage(session);
-            msg.setFrom(new InternetAddress("soares.weds@example.com", "Adminstração do W-commerce"));
+            msg.setFrom(new InternetAddress("< from email here>", "Adminstração do W-commerce"));
             msg.addRecipient(Message.RecipientType.TO, new InternetAddress(destinationEmail, destinationName));
             msg.setSubject("Transferência de créditos.");
             msg.setText("Você recebeu uma transferencia no valor de: " + transferedTotal);
