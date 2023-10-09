@@ -1,8 +1,10 @@
 package com.commerce.commerce.controllers;
 
-import com.commerce.commerce.requests.TransactionPostRequest;
+import com.commerce.commerce.dto.TransactionDTO;
 import com.commerce.commerce.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +21,12 @@ public class TransactionController {
     }
 
     @PostMapping
-    public void executeTransaction(@RequestBody TransactionPostRequest entity) {
-        this.service.performTransaction(entity);
+    public ResponseEntity executeTransaction(@RequestBody TransactionDTO entity) throws Exception {
+        try{
+            this.service.performTransaction(entity);
+            return ResponseEntity.ok("Transação efetuada com sucesso!");
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro na execução da transação:" + e.getMessage());
+        }
     }
 }

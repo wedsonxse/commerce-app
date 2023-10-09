@@ -1,12 +1,8 @@
-package com.commerce.commerce.entities;
+package com.commerce.commerce.dto;
 
-import jakarta.persistence.*;
+import com.commerce.commerce.entities.UserType;
 
-@Entity
-@Table(name="user")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserDTO {
     private Long id;
     private String name;
     private String cpf;
@@ -14,7 +10,6 @@ public class User {
     private String password;
     private UserType type;
     private Double balance;
-
     public Long getId() {
         return id;
     }
